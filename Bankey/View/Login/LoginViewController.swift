@@ -1,11 +1,21 @@
 import UIKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+  func didLogin()
+}
+
+protocol LogoutDelegate: AnyObject {
+  func didLogout()
+}
+
 class LoginViewController: UIViewController {
   let login = LoginView()
   private let button = UIButton(type: .system)
   private let errorMessage = UILabel()
   private let header = UILabel()
   private let subheader = UILabel()
+  
+  weak var delegate: LoginViewControllerDelegate?
   
   var username: String? {
     return login.usernameTextField.text
@@ -20,6 +30,13 @@ class LoginViewController: UIViewController {
     style()
     layout()
   }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    button.configuration?.showsActivityIndicator = false
+    login.usernameTextField.text = ""
+    login.passwordTextField.text = ""
+  }
 }
 
 extension LoginViewController {
@@ -27,7 +44,7 @@ extension LoginViewController {
     header.translatesAutoresizingMaskIntoConstraints = false
     header.text = "Bankey"
     header.textAlignment = .center
-    header.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+    header.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .largeTitle).pointSize, weight: .bold)
     header.adjustsFontForContentSizeCategory = true
     
     subheader.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +114,7 @@ extension LoginViewController {
     
     if username.lowercased() == "admin" && password.lowercased() == "admin" {
       button.configuration?.showsActivityIndicator = true
+      delegate?.didLogin()
     } else {
       configureView(withMessage: "Invalid username / password")
     }
