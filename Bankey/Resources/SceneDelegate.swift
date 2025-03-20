@@ -10,7 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     self.window = UIWindow(windowScene: scene)
 //    self.window?.rootViewController = LoginViewController()
-    self.window?.rootViewController = OnboardingViewController()
+    self.window?.rootViewController = OnboardingContainerViewController()
     self.window?.makeKeyAndVisible()
   }
   
