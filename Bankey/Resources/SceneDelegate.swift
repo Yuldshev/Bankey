@@ -1,10 +1,11 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+  var window: UIWindow?
+  
   let loginViewController = LoginViewController()
   let onboardingContainerViewController = OnboardingContainerViewController()
   let homeViewController = HomeViewController()
-  var window: UIWindow?
   
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,13 +24,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate: LoginViewControllerDelegate {
   func didLogin() {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
-      setRootViewController(onboardingContainerViewController)
+      if LocalState.hasOnboarded {
+        setRootViewController(homeViewController)
+      } else {
+        setRootViewController(onboardingContainerViewController)
+      }
     }
   }
 }
 
 extension SceneDelegate: OnboardingContainerViewControllerDelegate {
   func onboardingDidFinish() {
+    LocalState.hasOnboarded = true
     setRootViewController(homeViewController)
   }
 }
