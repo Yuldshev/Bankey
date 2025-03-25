@@ -1,12 +1,14 @@
 import UIKit
 
+let appColor: UIColor = .systemTeal
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
   let loginViewController = LoginViewController()
   let onboardingContainerViewController = OnboardingContainerViewController()
   let homeViewController = HomeViewController()
-  
+  let mainViewController = MainViewController()
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let scene = (scene as? UIWindowScene) else { return }
@@ -16,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     onboardingContainerViewController.delegate = self
     homeViewController.delegate = self
     
-    self.window?.rootViewController = loginViewController
+    self.window?.rootViewController = mainViewController
     self.window?.makeKeyAndVisible()
   }
 }

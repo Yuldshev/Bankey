@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Bankey
-//
-//  Created by Yuldashev Fazliddin on 19/03/25.
-//
-
 import UIKit
 
 @main
